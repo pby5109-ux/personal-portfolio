@@ -1,0 +1,219 @@
+/* ============================================================
+   全局样式（Tailwind CSS 4）
+   - 设计令牌（CSS 变量）：暗色为默认，.light 类切换亮色
+   - 自定义工具类：玻璃拟态、渐变文字、渐变按钮等
+   - 动效关键帧 + prefers-reduced-motion 降级
+   ============================================================ */
+@import "tailwindcss";
+
+/* 暗色变体：html 上存在 .dark 类时生效 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------- 设计令牌 ---------------- */
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0f;
+  --bg-soft: #10101c;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-strong: rgba(16, 16, 28, 0.82);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #eef2f8;
+  --muted: #98a2b8;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+.light {
+  color-scheme: light;
+  --bg: #f4f5fa;
+  --bg-soft: #ffffff;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.18);
+  --text: #14172b;
+  --muted: #5c6579;
+  --shadow-color: rgba(15, 23, 42, 0.12);
+}
+
+/* 把 CSS 变量映射为 Tailwind 颜色工具类：
+   例如 bg-background / text-foreground / border-line / bg-card */
+@theme inline {
+  --color-background: var(--bg);
+  --color-background-soft: var(--bg-soft);
+  --color-foreground: var(--text);
+  --color-muted: var(--muted);
+  --color-card: var(--surface);
+  --color-card-strong: var(--surface-strong);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-shadow: var(--shadow-color);
+  /* 品牌强调色 */
+  --color-brand-from: #6366f1;
+  --color-brand-mid: #a855f7;
+  --color-brand-to: #ec4899;
+  --font-sans: "Space Grotesk Variable", "Noto Sans SC Variable", ui-sans-serif,
+    system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+/* ---------------- 基础样式 ---------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.45);
+    color: #fff;
+  }
+
+  /* 细滚动条 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.45) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1, #a855f7, #ec4899);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid #a855f7;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ---------------- 自定义工具类 ---------------- */
+
+/* 渐变文字 */
+@utility text-gradient {
+  background-image: linear-gradient(115deg, #6366f1 0%, #a855f7 48%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 玻璃拟态卡片 */
+@utility glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+/* 更强的玻璃（弹窗 / 导航） */
+@utility glass-strong {
+  background: var(--surface-strong);
+  border: 1px solid var(--border-strong);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  box-shadow: 0 16px 48px var(--shadow-color);
+}
+
+/* 渐变主按钮（含 hover 发光）；内边距由使用处按需添加 */
+@utility btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #fff;
+  background-image: linear-gradient(115deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  background-size: 150% 150%;
+  background-position: 0% 50%;
+  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-gradient:hover {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(168, 85, 247, 0.55);
+}
+
+/* 细噪点纹理（增加质感） */
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* ---------------- 动画关键帧 ---------------- */
+@theme {
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-float-slow: float 15s ease-in-out infinite;
+  --animate-spin-slower: spin 16s linear infinite;
+  --animate-blob: blob 22s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2.6s linear infinite;
+  --animate-caret: caret 1.05s step-end infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(2deg);
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6vw, -4vh) scale(1.12);
+  }
+  100% {
+    transform: translate(-5vw, 5vh) scale(0.94);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes caret {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------------- 尊重系统「减少动态效果」设置 ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

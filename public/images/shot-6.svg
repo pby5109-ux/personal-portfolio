@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="ui-sans-serif,system-ui">
+  <defs>
+    <linearGradient id="ln" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8b5cf6"/><stop offset="100%" stop-color="#d946ef"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="800" height="500" rx="14" fill="#0d0d17"/>
+  <rect x="0" y="0" width="800" height="38" rx="14" fill="#161627"/>
+  <rect x="0" y="24" width="800" height="14" fill="#161627"/>
+  <circle cx="24" cy="19" r="6" fill="#ff5f57"/><circle cx="44" cy="19" r="6" fill="#febc2e"/><circle cx="64" cy="19" r="6" fill="#28c840"/>
+  <rect x="90" y="9" width="620" height="20" rx="10" fill="#0d0d17"/>
+  
+    <path d="M250 160 C 350 80, 480 90, 560 170" fill="none" stroke="#3a3a5c" stroke-width="2" stroke-dasharray="5 7"/>
+    <path d="M270 330 C 380 390, 460 380, 540 310" fill="none" stroke="#3a3a5c" stroke-width="2" stroke-dasharray="5 7"/>
+    <rect x="90" y="110" width="150" height="110" rx="8" fill="#8b5cf6" opacity="0.9" transform="rotate(-4 165 165)"/>
+    <rect x="560" y="120" width="150" height="110" rx="8" fill="#d946ef" opacity="0.9" transform="rotate(5 635 175)"/>
+    <rect x="120" y="290" width="150" height="110" rx="8" fill="#f59e0b" opacity="0.75" transform="rotate(3 195 345)"/>
+    <rect x="545" y="260" width="150" height="110" rx="8" fill="#10b981" opacity="0.75" transform="rotate(-5 620 315)"/>
+    <circle cx="410" cy="240" r="55" fill="#161627" stroke="#3a3a5c"/>
+    <text x="410" y="250" font-size="26" text-anchor="middle" fill="#e2e8f0" font-family="ui-monospace,monospace">✦</text>
+</svg>

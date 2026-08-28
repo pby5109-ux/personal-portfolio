@@ -1,0 +1,32 @@
+{
+  "name": "personal-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "个人作品集 & 自我介绍网站（Next.js 15 + Tailwind CSS 4 + Framer Motion + GSAP + Supabase）",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate:assets": "node scripts/generate-assets.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@supabase/supabase-js": "^2.112.4",
+    "framer-motion": "^13.1.1",
+    "gsap": "^3.15.0",
+    "lucide-react": "^1.35.0",
+    "next": "^15.5.24",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.0"
+  }
+}
