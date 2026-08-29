@@ -20,8 +20,8 @@ export const site = {
   /** SEO 描述 */
   description:
     "彭博裕的个人作品集网站：山东建筑大学物联网工程 2027 届本科生，具备 STM32/FreeRTOS 项目开发、软硬件联调与故障定位经历。展示项目作品、个人经历、技能与简历，期待与你交流。",
-  /** 你的站点线上地址（用于 SEO / Open Graph，部署后改成真实域名） */
-  url: "https://your-domain.vercel.app",
+  /** 你的站点线上地址（用于 SEO / Open Graph） */
+  url: "https://personal-portfolio-mu-henna-76.vercel.app",
 
   /** 导航栏锚点链接（顺序即展示顺序） */
   navLinks: [
