@@ -22,7 +22,7 @@ export const filesConfig = {
 };
 
 /**
- * 演示文件：未配置 Supabase 时展示这些占位文件，
+ * 演示文件：未配置 Supabase 时展示这些文件，
  * 让访客也能看到文件卡片的完整效果。
  */
 export interface DemoFile {
@@ -34,15 +34,15 @@ export interface DemoFile {
 
 export const demoFiles: DemoFile[] = [
   {
-    name: "个人简历.pdf",
-    size: 931,
-    date: "2026-08-20T10:00:00+08:00",
+    name: "个人简历（嵌入式软件工程师）.pdf",
+    size: 361511,
+    date: "2026-08-29T10:00:00+08:00",
     url: "/files/resume.pdf",
   },
   {
-    name: "项目报告（示例）.pdf",
-    size: 901,
-    date: "2026-08-15T18:30:00+08:00",
-    url: "/files/project-report-demo.pdf",
+    name: "个人简历（电子信息技术岗）.pdf",
+    size: 367956,
+    date: "2026-08-29T10:00:00+08:00",
+    url: "/files/resume-comprehensive.pdf",
   },
 ];

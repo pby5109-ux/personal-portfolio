@@ -1,14 +1,13 @@
 /**
  * ============================================================
  * 作品集数据（Portfolio 板块 + 作品详情子页面）
- * 👉 替换成你的真实项目：改字段即可，卡片 / 弹窗 / 详情页会自动生成
  *
- * category 只能取："前端" | "后端" | "设计" | "其他"
+ * category 只能取："嵌入式" | "竞赛实践"
  * cover / screenshots 支持本地路径（public/ 下）或任意 https 图片链接
  * ============================================================
  */
 
-export type ProjectCategory = "前端" | "后端" | "设计" | "其他";
+export type ProjectCategory = "嵌入式" | "竞赛实践";
 
 export interface ProjectLink {
   label: string;
@@ -41,145 +40,142 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "aura-dashboard",
-    title: "Aura · 实时数据可视化大屏",
+    slug: "stm32-measurement-platform",
+    title: "基于 STM32 与 FreeRTOS 的综合电子测量平台",
     summary:
-      "面向物联网场景的实时监控大屏，支持万级数据点流畅渲染与自定义拖拽布局。",
-    category: "前端",
-    year: "2025",
-    cover: "/images/cover-1.svg",
-    screenshots: ["/images/shot-1.svg", "/images/shot-5.svg", "/images/cover-1.svg"],
+      "集示波采集、数字万用表、信号发生器及稳压电源输出监测于一体的综合测量平台，最高 500 kSa/s 实时采集。",
+    category: "嵌入式",
+    year: "2026",
+    cover: "/images/projects/measurement-platform/hardware-scope-sine.jpg",
+    screenshots: [
+      "/images/projects/measurement-platform/hardware-scope-sine.jpg",
+      "/images/projects/measurement-platform/hardware-scope-measure.jpg",
+      "/images/projects/measurement-platform/hardware-awg-led.jpg",
+      "/images/projects/measurement-platform/hardware-breadboard.jpg",
+      "/images/projects/measurement-platform/code-lcd-task.png",
+    ],
     description: [
-      "Aura 是我为 [某实习公司 / 课程设计] 开发的实时数据可视化大屏。系统接入 WebSocket 实时数据流，在 4K 分辨率下稳定渲染 1 万+ 动态数据点，并支持按业务场景自由拖拽、缩放图表组件。",
-      "项目中我主导了渲染性能优化：通过虚拟化列表、Canvas 分层绘制与请求节流，将首屏渲染时间从 3.2s 降至 800ms 内；同时封装了 20+ 可复用的图表组件，让业务同事可以零代码搭建自己的监控视图。",
+      "这是一个集示波器、数字万用表（DMM）、信号发生器与稳压电源输出监测于一体的综合电子测量平台，基于 STM32F103RCT6 与 FreeRTOS 构建。系统采用 BSP / GUI / TASK 三层分层架构：通过事件组实现界面按区域按需重绘，以单槽覆盖队列向 GUI 传递最新测量值，并用二值信号量同步 SPI DMA 传输完成，显著减少轮询与无效刷新。",
+      "示波采集链路由比较器—EXTI—TIM3 TRGO—ADC1—DMA 硬件触发构成，最高 500 kSa/s 采样率下连续采集 1024 点；结合 10 ms Hold-Off 抑制重复触发、100 ms 强制触发兜底无信号场景，并实现 Auto / One-Shot 两种触发模式的状态控制与单帧冻结，两种模式均通过实机验证。",
+      "测量与信号输出方面：采用 ADC1 注入组以 10 Hz 周期采集 DMM 输入、VREFINT、稳压输出和触发阈值，基于 VREFINT 反推 VDDA 并结合 GPIO 挡位识别完成多量程换算；通过 TIM5 TRGO 驱动 DAC+DMA 循环输出正弦波、方波和三角波，按输出频率动态调整采样率与有效点数。期间定位并修正了低频档定时参数未更新、频率切换滞后一档两个时序问题，均完成实机运行验证。",
     ],
     highlights: [
-      "WebSocket 实时推送，数据延迟 < 1s",
-      "万级数据点流畅渲染（Canvas 分层 + 节流）",
-      "拖拽式自定义布局，配置实时保存",
-      "封装 20+ 图表组件，支持主题切换",
+      "BSP/GUI/TASK 分层 + 事件组按区域刷新 + 单槽覆盖队列 + 二值信号量同步 SPI DMA",
+      "比较器—EXTI—TIM3 TRGO—ADC1—DMA 采集链，500 kSa/s × 1024 点",
+      "10 ms Hold-Off、100 ms 强制触发与 Auto/One-Shot 状态控制，实机验证",
+      "VREFINT 反推 VDDA 多量程换算 + DAC+DMA 循环输出三种波形，修正两个时序问题",
     ],
-    tech: ["React", "TypeScript", "ECharts", "WebSocket", "Zustand"],
+    tech: ["C", "STM32F103RCT6", "FreeRTOS", "ADC/DAC/DMA", "TIM/EXTI", "SPI"],
     links: [
-      { label: "GitHub", url: "https://github.com/yourname/aura-dashboard" },
-      { label: "在线演示", url: "https://your-demo-link.com" },
+      { label: "GitHub", url: "https://github.com/pby5109-ux/Multifunctional_Measuring_Instrument" },
     ],
   },
   {
-    slug: "suiji-ai-notes",
-    title: "随记 · AI 摘要笔记服务",
+    slug: "smart-farm-monitoring",
+    title: "基于 STM32 与 FreeRTOS 的智慧农场环境监测与控制系统",
     summary:
-      "基于大模型的笔记后端服务，自动生成文章摘要与标签，QPS 峰值 500+。",
-    category: "后端",
+      "四任务 FreeRTOS 架构的环境监测与自动控制系统：多源传感采集、阈值联动控制与蓝牙 JSON 告警闭环。",
+    category: "嵌入式",
     year: "2025",
-    cover: "/images/cover-2.svg",
-    screenshots: ["/images/shot-2.svg", "/images/shot-1.svg"],
+    cover: "/images/projects/smart-farm/hardware-full-setup.jpg",
+    screenshots: [
+      "/images/projects/smart-farm/hardware-full-setup.jpg",
+      "/images/projects/smart-farm/hardware-oled-data.jpg",
+      "/images/projects/smart-farm/ble-json-alerts.png",
+      "/images/projects/smart-farm/code-sensor-task.png",
+    ],
     description: [
-      "随记是一个面向内容创作者的智能笔记服务。后端接收用户上传的长文，调用大模型 API 自动生成摘要、提取关键词标签，并提供全文检索能力。",
-      "我负责整体架构设计：采用 FastAPI + PostgreSQL + Redis 的组合，通过异步任务队列削峰、接口幂等设计保证稳定性，压测下 QPS 峰值 500+，P99 延迟 180ms。项目使用 Docker Compose 一键部署，并编写了完整的接口文档。",
+      "基于 STM32F103C8T6 与 FreeRTOS 搭建的环境监测和自动控制系统：将传感采集、按键/编码器输入、OLED 显示与 BLE 通信划分为 Sensor、Input、Screen、BLE 四个任务，并以 farmState / farmSafeRange 两组共享状态解耦实时数据、界面显示与可配置安全阈值。",
+      "数据采集结合 AHT20（温湿度）、BH1750（光照）及土壤湿度/雨滴传感器，使用 ADC1 扫描 + 循环 DMA、ADC2 连续转换及 I²C 完成多源数据读取；针对 AHT20 与 OLED 共享 I²C1 总线的情况，以互斥锁保护总线访问。",
+      "控制与告警：基于阈值驱动水泵和 PWM 风扇，通过指针消息队列与 UART DMA 发送 JSON 告警。完善了队列满时的消息内存释放，将持续报警改为 warning / recovered 状态边沿触发，并为水泵加入 5% 滞回避免临界启停，形成「异常检测—执行器联动—蓝牙告警—恢复通知」的完整控制闭环，减少重复消息与临界抖动。以上改动均完成编译、烧录与上板验证。",
     ],
     highlights: [
-      "异步任务队列处理大模型调用，避免请求阻塞",
-      "PostgreSQL + pgvector 实现语义检索",
-      "Redis 缓存热点数据，P99 延迟 180ms",
-      "Docker Compose 一键部署 + 完整 API 文档",
+      "Sensor/Input/Screen/BLE 四任务架构，farmState/farmSafeRange 解耦状态与阈值",
+      "AHT20、BH1750 及土壤/雨滴多源采集：ADC1 扫描循环 DMA + ADC2 连续转换 + I²C",
+      "互斥锁保护共享 I²C1 总线，指针消息队列 + UART DMA 发送 JSON 告警",
+      "warning/recovered 告警边沿 + 水泵 5% 滞回，形成检测—联动—告警—恢复闭环",
     ],
-    tech: ["Python", "FastAPI", "PostgreSQL", "Redis", "Docker"],
-    links: [{ label: "GitHub", url: "https://github.com/yourname/suiji-api" }],
-    report: { label: "设计文档（示例 PDF）", url: "/files/project-report-demo.pdf" },
+    tech: ["C", "STM32F103C8T6", "FreeRTOS/CMSIS-RTOS2", "ADC/DMA", "I²C", "UART DMA", "PWM"],
+    links: [{ label: "GitHub", url: "https://github.com/pby5109-ux/SmartFarm" }],
   },
   {
-    slug: "campus-market",
-    title: "校园二手交易平台",
+    slug: "lora-sensor-node",
+    title: "基于 STM32 的低功耗 LoRa 环境传感节点",
     summary:
-      "服务全校学生的二手交易 Web 应用，上线三个月注册用户 2000+。",
-    category: "前端",
-    year: "2024",
-    cover: "/images/cover-3.svg",
-    screenshots: ["/images/shot-3.svg", "/images/shot-5.svg", "/images/shot-2.svg"],
+      "独立开发的环境监测节点：RTC Alarm 周期唤醒 Stop 低功耗运行，LoRa 遥测帧 + CRC16 + ACK 重试可靠上报。",
+    category: "嵌入式",
+    year: "2025",
+    cover: "/images/projects/lora-node/hardware-lora-wiring.jpg",
+    screenshots: [
+      "/images/projects/lora-node/hardware-lora-wiring.jpg",
+      "/images/projects/lora-node/code-main-lora.png",
+    ],
     description: [
-      "这是一个我和两位同学一起做的校园项目：从需求调研、原型设计到开发上线全流程参与。平台支持商品发布、站内私信、信用评价与失物招领板块。",
-      "我主要负责前端架构与核心页面开发，落地了图片懒加载、无限滚动、骨架屏等体验优化；同时推动团队引入 Git Flow 与 Code Review 流程，保证三个人的协作质量。",
+      "独立完成的低功耗环境传感节点（含需求拆分、CubeMX 配置、传感器接入、通信显示与低功耗流程集成、调试）：基于 STM32F103C8T6 采集 AHT20 温湿度、BH1750 光照与雨滴模拟量，分别适配硬件 I²C、GPIO 模拟 I²C 与 ADC 采样三种方式，实现 OLED 显示、阈值判断及红绿 LED 状态指示。",
+      "低功耗设计：利用 LSE 驱动 RTC 并设置闹钟，暂停 SysTick 后进入 Stop 模式，RTC Alarm 经 EXTI Line 17 唤醒，唤醒后重新配置 PLL 恢复系统时钟，形成「采集—显示—通信—休眠—唤醒」的周期闭环，实现 5 秒周期唤醒运行（已上板验证）。",
+      "通信协议：通过 USART3 TX DMA 发送 LoRa 遥测数据，自设计 18 字节遥测帧（含 Node ID / Sequence）、CRC16-CCITT 校验、ACK 匹配与一次重试机制；并编写 PC 侧串口网关完成流式组帧、CRC 校验、重复帧识别和 ACK 生成，完成离线与串口链路协议测试。",
     ],
     highlights: [
-      "上线 3 个月注册用户 2000+，日均活跃 150+",
-      "Next.js SSR 首屏优化，Lighthouse 性能分 92",
-      "移动端优先的响应式设计",
-      "建立团队 Git 协作与 Code Review 规范",
+      "独立完成系统设计与应用开发：硬件 I²C + GPIO 模拟 I²C + ADC 三种采集方式适配",
+      "RTC Alarm—EXTI17 唤醒、Stop 模式、唤醒后 PLL 恢复，5 秒周期运行闭环",
+      "18 字节 LoRa 遥测帧 + CRC16-CCITT + Node ID/Sequence + ACK 匹配与一次重试",
+      "PC 侧串口网关：流式组帧、校验、重复帧识别与 ACK 生成",
     ],
-    tech: ["Next.js", "Tailwind CSS", "Supabase", "Vercel"],
-    links: [
-      { label: "GitHub", url: "https://github.com/yourname/campus-market" },
-      { label: "在线演示", url: "https://your-demo-link.com" },
-    ],
+    tech: ["C", "STM32F103C8T6", "ADC", "I²C", "UART DMA", "RTC/Stop", "LoRa"],
+    links: [{ label: "GitHub", url: "https://github.com/pby5109-ux/stm32-sensor-terminal" }],
   },
   {
-    slug: "monogram-brand",
-    title: "Monogram · 个人品牌视觉设计",
+    slug: "nec-contest-smart-device",
+    title: "TI 杯 2025 全国大学生电子设计竞赛 E 题《简易自行瞄准装置》",
     summary:
-      "为个人 IP 完成的整套品牌视觉：Logo、配色系统、排版规范与社交媒体模板。",
-    category: "设计",
-    year: "2024",
-    cover: "/images/cover-4.svg",
-    screenshots: ["/images/shot-4.svg", "/images/cover-4.svg"],
+      "3 人团队限时参赛：基于 TI MSPM0G3507 负责五路灰度循迹与按键/OLED 人机交互模块的开发与联调。",
+    category: "竞赛实践",
+    year: "2025",
+    cover: "/images/projects/nec-contest/hardware-car.jpg",
+    screenshots: [
+      "/images/projects/nec-contest/hardware-car.jpg",
+      "/images/projects/nec-contest/hardware-aiming-device.jpg",
+      "/images/projects/nec-contest/hardware-control-board.jpg",
+      "/images/projects/nec-contest/entry-certificate.jpg",
+      "/images/projects/nec-contest/code-gray-track.png",
+    ],
     description: [
-      "这是我自己运营的个人 IP 项目中完成的一套品牌视觉。从 Logo 草图、栅格推敲，到配色系统、字体层级与社交媒体模板，形成了一套可以长期复用的 VI 规范。",
-      "整个过程让我更深入地理解了「设计系统」的思维：统一的设计 Token 让后续所有物料都能快速产出，并且保持风格一致。这套经验也直接迁移到了我写前端组件库的实践中。",
+      "2025 年全国大学生电子设计竞赛（TI 杯）E 题《简易自行瞄准装置》，3 人团队限时开发。装置包含自动寻迹小车，由 TI MSPM0G3507（Arm Cortex-M0+，80 MHz）负责巡迹与电机控制，通过 SysConfig 生成外设配置并基于 TI DriverLib 开发。",
+      "本人负责按键 / OLED 人机交互与五路灰度循迹模块：完成四键扫描、任务模式与圈数、启停参数控制，以及主界面、姿态、五路灰度、电机状态、串口坐标和 PID 参数等多页面显示；将五路灰度输入拼接为 5 bit 状态码，根据传感器组合映射横向偏差并识别左右转标志，偏差送入位置式 PID 后形成左右轮差速 PWM 修正。循迹与整车状态逻辑由 1 ms 定时器中断周期调用，配合团队完成整车功能联调。",
     ],
     highlights: [
-      "完整 VI：Logo / 配色 / 字体 / 图形系统",
-      "输出 Figma 组件库，物料产出效率提升 3 倍",
-      "社交平台模板累计曝光 10w+",
+      "五路灰度 GPIO 采集 + 5 bit 状态编码 + 横向偏差/转向标志映射",
+      "循迹误差接入位置式 PID，输出左右轮差速 PWM 修正",
+      "四键扫描 + OLED 多页面显示：任务模式、圈数、启停与 PID 参数调整",
+      "1 ms 定时器中断控制周期，与电机/编码器/姿态模块协同整车联调",
     ],
-    tech: ["Figma", "Illustrator", "Photoshop", "品牌设计"],
-    links: [{ label: "设计稿预览", url: "https://your-figma-link.com" }],
+    tech: ["C", "TI MSPM0G3507", "DriverLib/SysConfig", "GPIO", "TIM", "OLED", "PID 接口"],
   },
   {
-    slug: "smart-timetable",
-    title: "智能课表小程序",
+    slug: "stm32-line-following-car",
+    title: "基于 STM32 的红外循迹避障遥控小车（开放实验）",
     summary:
-      "支持拍照导入课表、四六级倒计时与考试提醒的校园工具小程序，用户 5000+。",
-    category: "其他",
-    year: "2023",
+      "6 人开放实验项目循迹小组负责人：五路灰度状态处理与循迹误差接口设计，整车联调验收获评优秀。",
+    category: "竞赛实践",
+    year: "2025",
     cover: "/images/cover-5.svg",
     screenshots: ["/images/shot-5.svg", "/images/shot-1.svg"],
     description: [
-      "一款解决「每学期手抄课表」痛点的小工具：拍照上传课表截图后，OCR 自动识别并生成结构化课表，还提供四六级倒计时、考试日程提醒等附加功能。",
-      "独立完成产品、设计与开发全流程。期间踩过的最有意思的坑是 OCR 识别不同教务系统截图样式的适配——最终通过模板匹配 + 规则引擎组合，把识别准确率从 76% 提升到 95%。",
+      "6 人开放实验项目，分为循迹、避障和蓝牙遥控三个小组，基于 STM32F103C8T6 完成整车软硬件开发。本人担任循迹小组负责人，带领循迹组完成五路灰度传感器的硬件接入与调试。",
+      "负责五路灰度数据的接收、状态编码与偏差映射，设计循迹误差输出接口，为后级转向控制提供方向和偏差量；协同避障组与蓝牙遥控组完成整车集成、轨迹测试与参数修正。项目验收与个人评价均获评「优秀」。",
     ],
     highlights: [
-      "OCR 拍照导入课表，识别准确率 95%",
-      "订阅消息考试提醒，次日留存 40%",
-      "累计用户 5000+，应用商店评分 4.8",
+      "担任 6 人项目循迹小组负责人",
+      "五路灰度数据接收、状态编码与偏差映射，循迹误差接口设计",
+      "协同避障、蓝牙遥控两组完成整车联调与轨迹修正",
+      "项目验收与个人评价均获评优秀",
     ],
-    tech: ["微信小程序", "云开发", "OCR", "Node.js"],
-    links: [{ label: "项目仓库", url: "https://github.com/yourname/smart-timetable" }],
-  },
-  {
-    slug: "pulse-whiteboard",
-    title: "Pulse · 实时协作白板",
-    summary:
-      "多人实时协作白板，支持画笔、便签、框选与光标同步，延迟 < 50ms。",
-    category: "前端",
-    year: "2024",
-    cover: "/images/cover-6.svg",
-    screenshots: ["/images/shot-6.svg", "/images/shot-3.svg"],
-    description: [
-      "Pulse 是我研究 CRDT 与协同编辑时做的实验性项目：多人可以在同一块白板上同时绘制、贴便签，彼此的光标实时可见，冲突由 CRDT 自动合并。",
-      "技术上采用 Canvas 渲染 + WebSocket 增量同步，通过操作合并与防抖把同步带宽降低了 70%。这个项目让我对分布式一致性与实时通信有了远超课本的理解。",
-    ],
-    highlights: [
-      "基于 CRDT 的冲突自动合并，离线可用",
-      "操作合并 + 防抖，同步带宽降低 70%",
-      "多光标实时同步，端到端延迟 < 50ms",
-    ],
-    tech: ["React", "Canvas", "Socket.IO", "Yjs", "Node.js"],
-    links: [{ label: "GitHub", url: "https://github.com/yourname/pulse-whiteboard" }],
+    tech: ["C", "STM32F103C8T6", "GPIO", "五路灰度传感器", "循迹误差接口", "整车联调"],
   },
 ];
 
 /** 作品集筛选类别（「全部」+ 数据中出现的类别自动聚合） */
-export const projectCategories = ["全部", "前端", "后端", "设计", "其他"] as const;
+export const projectCategories = ["全部", "嵌入式", "竞赛实践"] as const;
 
 /** 根据 slug 查找项目 */
 export function getProjectBySlug(slug: string) {

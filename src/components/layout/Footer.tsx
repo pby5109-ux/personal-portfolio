@@ -19,7 +19,7 @@ export default function Footer() {
               {site.name}
             </div>
             <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted">
-              {site.nameEn} · 全栈开发者 · 用代码与设计创造有价值的产品
+              {site.nameEn} · 嵌入式软件开发 · 用代码与硬件创造有价值的产品
             </p>
           </div>
 
@@ -43,15 +43,17 @@ export default function Footer() {
             >
               <GithubIcon className="h-4 w-4" />
             </a>
-            <a
-              href={site.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300"
-            >
-              <LinkedinIcon className="h-4 w-4" />
-            </a>
+            {site.socials.linkedin && (
+              <a
+                href={site.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="glass flex h-9 w-9 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300"
+              >
+                <LinkedinIcon className="h-4 w-4" />
+              </a>
+            )}
             <a
               href={`mailto:${site.socials.email}`}
               aria-label="邮箱"

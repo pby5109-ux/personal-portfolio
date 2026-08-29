@@ -141,7 +141,7 @@ export default function Contact() {
               </span>
               <div>
                 <p className="text-xs text-muted">坐标</p>
-                <p className="text-sm font-medium">[你的城市] · 可远程协作</p>
+                <p className="text-sm font-medium">山东 · 济南</p>
               </div>
             </div>
           </Reveal>
@@ -157,15 +157,17 @@ export default function Contact() {
             >
               <GithubIcon className="h-5 w-5" />
             </a>
-            <a
-              href={site.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="glass flex h-11 w-11 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300 hover:shadow-[0_8px_26px_rgba(139,92,246,0.4)]"
-            >
-              <LinkedinIcon className="h-5 w-5" />
-            </a>
+            {site.socials.linkedin && (
+              <a
+                href={site.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="glass flex h-11 w-11 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300 hover:shadow-[0_8px_26px_rgba(139,92,246,0.4)]"
+              >
+                <LinkedinIcon className="h-5 w-5" />
+              </a>
+            )}
             <button
               type="button"
               onClick={() => setQrOpen(true)}

@@ -92,7 +92,7 @@ export default function Hero() {
           transition={{ delay: 1, duration: 0.6 }}
           className="mt-6 flex h-8 items-center justify-center text-lg font-medium md:h-9 md:text-2xl"
         >
-          <span className="text-muted">[你的专业] 毕业生 / </span>
+          <span className="text-muted">物联网工程毕业生 / </span>
           <span className="ml-1 text-foreground">{typed}</span>
           <span className="ml-0.5 inline-block h-[1.2em] w-[2px] animate-caret bg-gradient-to-b from-indigo-400 to-pink-400" aria-hidden />
         </motion.div>
@@ -143,15 +143,17 @@ export default function Hero() {
           >
             <GithubIcon className="h-[18px] w-[18px]" />
           </a>
-          <a
-            href={site.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="glass flex h-10 w-10 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300 hover:shadow-[0_6px_24px_rgba(139,92,246,0.4)]"
-          >
-            <LinkedinIcon className="h-[18px] w-[18px]" />
-          </a>
+          {site.socials.linkedin && (
+            <a
+              href={site.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="glass flex h-10 w-10 items-center justify-center rounded-full text-muted transition-all duration-300 hover:-translate-y-1 hover:text-purple-300 hover:shadow-[0_6px_24px_rgba(139,92,246,0.4)]"
+            >
+              <LinkedinIcon className="h-[18px] w-[18px]" />
+            </a>
+          )}
           <a
             href={`mailto:${site.socials.email}`}
             aria-label="邮箱"

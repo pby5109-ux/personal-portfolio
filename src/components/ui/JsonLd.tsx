@@ -11,8 +11,8 @@ export function JsonLd() {
     name: site.name,
     url: site.url,
     email: site.socials.email,
-    sameAs: [site.socials.github, site.socials.linkedin],
-    jobTitle: "全栈开发者",
+    sameAs: [site.socials.github, site.socials.linkedin].filter(Boolean),
+    jobTitle: "嵌入式软件工程师",
     description: site.description,
   };
 

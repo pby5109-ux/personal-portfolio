@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  keywords: ["个人作品集", "前端开发", "全栈开发", "简历", site.name],
+  keywords: ["个人作品集", "嵌入式开发", "STM32", "FreeRTOS", "物联网", "简历", site.name],
   authors: [{ name: site.name, url: site.url }],
   openGraph: {
     type: "website",
